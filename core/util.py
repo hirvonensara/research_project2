@@ -107,21 +107,21 @@ def set_up_log_and_ws_out(models_out, opt_config, experiment_name, headers=None)
 
 
 def load_ava_train_video_set():
-    files = os.listdir('/Dataset/ava_active_speaker/csv/gt/ava_activespeaker_train_v1.0')
+    files = os.listdir('/scratch/cs/imagedb/Jalil/ASC/csv/train')
     videos = [f[:-18] for f in files]
     videos.sort()
     return videos
 
 
 def load_ava_val_video_set():
-    files = os.listdir('/Dataset/ava_active_speaker/csv/gt/ava_activespeaker_test_v1.0')
+    files = os.listdir('/scratch/cs/imagedb/Jalil/ASC/csv/val')
     videos = [f[:-18] for f in files]
     videos.sort()
     return videos
 
 
 def load_ava_test_video_set():
-    files = os.listdir('/Dataset/ava_active_speaker/csv/gt/challenge')
+    files = os.listdir('/scratch/cs/imagedb/Jalil/ASC/csv/val')
     videos = [f[:-18] for f in files]
     videos.sort()
     return videos

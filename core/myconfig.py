@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torch.optim as optim
-import core.models_ste as ste
+import core.mymodels_ste as ste
 
 
 # STE Train
@@ -13,7 +13,7 @@ STE_inputs = {
     # Data config
     'audio_dir': '/scratch/cs/imagedb/Jalil/ASC/instance_wavs_time/',
     'video_dir': '/scratch/cs/imagedb/Jalil/ASC/instance_crops_time/',
-    'models_out': '/scratch/cs/imagedb/Jalil/ASC_Models'
+    'models_out': '/scratch/cs/imagedb/Jalil/myASC_Models'
 }
 STE_2D_optimization_params = {
     # Net Arch

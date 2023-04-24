@@ -18,8 +18,8 @@ if __name__ == '__main__':
     clip_lenght = int(sys.argv[2])
     image_size = (160, 160)
 
-    model_weights = '/home/alcazajl/Models/ASC2/ste/ste_res18_clip11/55.pth'
-    target_directory = '/home/alcazajl/Forwards/ICCV/ste11_val/'
+    model_weights = '/scratch/cs/imagedb/Jalil/ASC_Models/ste_res18_clip11/35.pth'
+    target_directory = '/scratch/cs/imagedb/Jalil/MAAS/ste11_val/'
     io_config = exp_conf.STE_inputs_forward
     opt_config = exp_conf.STE_forward_params
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     video_val_transform = transforms.Compose([transforms.Resize(image_size), ct.video_val])
     video_val_path = os.path.join(io_config['video_dir'], 'val')
-    audio_val_path = os.path.join(io_config['audio_dir'], 'val')
+    audio_val_path = os.path.join(io_config['audio_dir'])
 
     video_set = load_ava_val_video_set()
     csv_path = io_config['csv_val_full']

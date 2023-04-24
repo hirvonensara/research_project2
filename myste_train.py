@@ -7,10 +7,10 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 
 from core.optimization import optimize_ste_losses
-from core.datasets import STEDataset
+from core.mydatasets import STEDataset
 from core.util import configure_backbone, set_up_log_and_ws_out
 
-import core.config as exp_conf
+import core.myconfig as exp_conf
 import core.custom_transforms as ct
 
 
