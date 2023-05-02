@@ -2,6 +2,9 @@
 # https://github.com/fuankarion/active-speakers-context/blob/master/core/models.py
 # https://github.com/mit-han-lab/temporal-shift-module/blob/master/ops/temporal_shift.py
 
+# ADDED
+from sys import exit
+
 import torch
 import torch.nn as nn
 
@@ -233,17 +236,24 @@ class TwoStreamResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, a, v, aa=[]):
+        print("Audio size in the beginning:", a.shape)
+        print("Video size in the beginning", v.shape)
+
         # audio Stream
         a = self.audio_conv1(a)
         a = self.a_bn1(a)
         a = self.relu(a)
         a = self.maxpool(a)
 
+        print('Audio size after maxpool', a.shape)
+
         a = self.a_layer1(a)
         a = self.a_layer2(a)
         a = self.a_layer3(a)
         a = self.a_layer4(a)
         a = self.avgpool(a)
+
+        print('Audio size after avgpool', a.shape)
 
         # visual Stream
         if len(v.shape) == 5:
@@ -253,11 +263,15 @@ class TwoStreamResNet(nn.Module):
         v = self.relu(v)
         v = self.maxpool(v)
 
+        print('Video size after maxpool', v.shape)
+
         v = self.v_layer1(v)
         v = self.v_layer2(v)
         v = self.v_layer3(v)
         v = self.v_layer4(v)
         v = self.avgpool(v)
+
+        print('Video size after avgpool', v.shape)
 
         # concat stream feats
         a = a.reshape(a.size(0), -1)
@@ -266,6 +280,8 @@ class TwoStreamResNet(nn.Module):
             v = v.view(-1, self.rgb_stack_size, a.shape[1])
             v = v.mean(1)
         stream_feats = torch.cat((a, v), 1)
+
+        print('concatenated size', stream_feats.shape)
 
         # auxiliary supervisions
         a = self.fc_128_a(a)
@@ -276,10 +292,19 @@ class TwoStreamResNet(nn.Module):
         aux_a = self.fc_aux_a(a)
         aux_v = self.fc_aux_v(v)
 
+        print('auxiliary shapes: audio', aux_a.shape, 'video', aux_v.shape)
+
         # global supervision
         av = torch.cat((a, v), 1)
 
+        print('global av size', av.shape)
+
         x = self.fc_final(av)
+
+        print('final:', x.shape)
+
+        # FOR DEBUGGING, STOP THE CODE HERE
+        exit(0)
 
         return x, aux_a, aux_v, stream_feats[..., :512], stream_feats[..., 512:]
 
