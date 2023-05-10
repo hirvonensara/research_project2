@@ -243,8 +243,11 @@ class TwoStreamResNet(nn.Module):
         a = self.audio_conv1(a)
         a = self.a_bn1(a)
         a = self.relu(a)
+
+        a_before_maxpool = a
         a = self.maxpool(a)
 
+        print('Audio size before maxpool', a_before_maxpool.shape)
         print('Audio size after maxpool', a.shape)
 
         a = self.a_layer1(a)
