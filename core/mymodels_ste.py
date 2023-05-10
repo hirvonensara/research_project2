@@ -244,16 +244,19 @@ class TwoStreamResNet(nn.Module):
         a = self.a_bn1(a)
         a = self.relu(a)
 
-        a_before_maxpool = a
-        a = self.maxpool(a)
+        #a_before_maxpool = a
+        #a = self.maxpool(a)
 
-        print('Audio size before maxpool', a_before_maxpool.shape)
-        print('Audio size after maxpool', a.shape)
+        #print('Audio size before maxpool', a_before_maxpool.shape)
+        #print('Audio size after maxpool', a.shape)
 
         a = self.a_layer1(a)
         a = self.a_layer2(a)
         a = self.a_layer3(a)
         a = self.a_layer4(a)
+
+        print('Audio size before avgpool', a.shape)
+
         a = self.avgpool(a)
 
         print('Audio size after avgpool', a.shape)
